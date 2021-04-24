@@ -1,0 +1,62 @@
+﻿@using SchoolTest.Service.IRepository
+@model IEnumerable<SchoolTest.Models.ViewModel.StudentViewModel>
+
+@inject IClassRepository _icsr
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.StudentId)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.StudentId)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @{
+                        var clName = _icsr.Get(item.ClassId).Name;
+                    }
+                    @clName
+
+                    @*@Html.DisplayFor(modelItem => item.ClassName)*@
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { item.StudentId }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { item.StudentId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
